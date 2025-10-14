@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perpustakaan</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .library-section img {
+            width: 100%; /* Lebar responsif */
+            max-width: 300px; /* Maksimal lebar */
+            height: 200px; /* Tinggi tetap */
+            object-fit: cover; /* Memastikan gambar terpotong dengan proporsi yang benar */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animasi transisi */
+        }
+
+        .library-section img:hover {
+            transform: scale(1.1); /* Efek zoom saat hover */
+            box-shadow: 0 10px 10px rgba(199, 11, 11, 0.2); /* Bayangan saat hover */
+        }
+
+        .library-section .text-center {
+            font-size: 1.1em; /* Ukuran teks lebih besar */
+            font-weight: bold; /* Teks lebih tebal */
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-light">
+        <div class="container">
+            <div class="row align-items-center d-flex">
+                <div class="col-md-2 d-flex align-items-center">
+                    <img src="images/logo.jpg" alt="Logo Perpustakaan" class="img-fluid" style="max-width: 50px; height: auto;">
+                    <span class="ml-2" style="color: black; font-family: 'Roboto', sans-serif;">Perpustakaan</span>
+                </div>
+                <div class="col-md-10">
+                    <nav class="navbar navbar-expand-md navbar-light">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="profile.html">Profil</a></li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#layanan" id="layananDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Layanan Kami</a>
+                                    <div class="dropdown-menu" aria-labelledby="layananDropdown">
+                                        <a class="dropdown-item" href="daftaranggota.html">Daftar Anggota</a>
+                                        <a class="dropdown-item" href="tabelbuku.html">Tabel Buku</a>
+                                        <a class="dropdown-item" href="pengembalian.html">Pengembalian</a>
+                                        <a class="dropdown-item" href="peminjaman.html">Peminjaman</a>
+                                        <a class="dropdown-item" href="pemesananbuku.html">Pemesanan Buku</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#Log In" id="loginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Log In</a>
+                                    <div class="dropdown-menu" aria-labelledby="loginDropdown">
+                                        <a class="dropdown-item" href="login.html">Login</a>
+                                        <a class="dropdown-item" href="register.html">Register</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mt-4">
+        <!-- Konten utama di sini -->
+        <section class="library-section mt-5">
+            <h2 class="text-center mb-4">Perpustakaan Lainnya</h2>
+            <p class="text-center">Temukan lebih banyak perpustakaan di bawah ini:</p>
+            <ul class="list-unstyled d-flex justify-content-center">
+                <li class="mx-3">
+                    <a href="https://library.usu.ac.id/id" class="text-decoration-none">
+                        <img src="images/usu.jpg" alt="Perpustakaan USU" class="img-thumbnail">
+                        <div class="text-center mt-2">Universitas Sumatera Utara</div>
+                    </a>
+                </li>
+                <li class="mx-3">
+                    <a href="https://lib.ui.ac.id/" class="text-decoration-none">
+                        <img src="images/ui.jpg" alt="Fitrah Ramadhan" class="img-thumbnail">
+                        <div class="text-center mt-2">Universitas Indonesia</div>
+                    </a>
+                </li>
+                <li class="mx-3">
+                    <a href="https://lib.ugm.ac.id/" class="text-decoration-none">
+                        <img src="images/ugm.jpg" alt="Universitas Gadjah Mada" class="img-thumbnail">
+                        <div class="text-center mt-2">Universitas Gadjah Mada</div>
+                    </a>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h2 class="text-center">Profil Perpustakaan</h2>
+            <div class="image-container">
+                <img src="images/perpus.jpg" alt="Profil Perpustakaan" class="img-fluid animated-image">
+            </div>
+            <p class="text-center">Perpustakaan kami menyediakan berbagai macam buku dan layanan untuk mendukung pembelajaran Anda.</p>
+        </section>
+    </main>
+    <section class="bg-light text-center py-3" style="margin-top: 40px;">   
+        
+        <footer class="bg-light text-center py-3" style="margin-top: 20px;">
+            <p>Copyright © 2025 — Made with Rimeyy💛 Perpustakaan Universitas </p>
+        </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

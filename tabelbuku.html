@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perpustakaan</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- 
+    CARA MENGGANTI GAMBAR BUKU:
+    
+    1. Download gambar cover buku dari internet
+    2. Simpan gambar di folder images/ dengan nama yang sesuai
+    3. Ganti src gambar di book-cover dengan path gambar yang baru
+    
+    Contoh:
+    - Untuk buku "NEGARA DEMOKRASI INDONESIA", ganti:
+      <img src="images/Narnia_2_The_Lion_The_Witch_and_The_Wardrobe_cov_page-0001.jpg" alt="NEGARA DEMOKRASI INDONESIA">
+      Menjadi:
+      <img src="images/negara-demokrasi-indonesia-cover.jpg" alt="NEGARA DEMOKRASI INDONESIA">
+    
+    - Untuk buku "To Kill a Mockingbird", ganti:
+      <img src="images/1.jpg" alt="To Kill a Mockingbird">
+      Menjadi:
+      <img src="images/to-kill-mockingbird-cover.jpg" alt="To Kill a Mockingbird">
+    
+    Tips:
+    - Gunakan nama file yang deskriptif
+    - Pastikan gambar memiliki resolusi yang baik
+    - Format JPG, PNG, atau WEBP direkomendasikan
+    - Ukuran ideal: 300x400px atau proporsi 3:4
+    -->
+    <style>
+        /* 
+        INSTRUKSI UNTUK MENGGANTI GAMBAR BUKU:
+        
+        1. Download gambar cover buku dari internet (Google Images, Amazon, dll)
+        2. Simpan gambar dengan nama yang sesuai di folder images/
+        3. Ganti src gambar di book-cover dengan path gambar yang baru
+        
+        Contoh:
+        Dari: <img src="images/default-image.jpg" alt="Judul Buku">
+        Menjadi: <img src="images/judul-buku-cover.jpg" alt="Judul Buku">
+        
+        Sumber gambar yang direkomendasikan:
+        - Google Images (cari "book cover [judul buku]")
+        - Amazon.com (halaman buku)
+        - Goodreads.com
+        - OpenLibrary.org
+        
+        Format gambar yang disarankan: JPG, PNG, WEBP
+        Ukuran yang disarankan: 300x400px atau proporsi 3:4
+        */
+      
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .catalog-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            margin: 2rem 0;
+            padding: 2rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .catalog-title {
+            color: #2c3e50;
+            font-weight: 700;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-section {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .book-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .book-cover {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            text-align: center;
+            padding: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-cover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            z-index: 1;
+        }
+
+        .book-cover-text {
+            position: relative;
+            z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* Style untuk gambar asli */
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* 
+        CARA MENGGANTI GAMBAR BUKU:
+        
+        1. Download gambar cover buku dari internet
+        2. Simpan gambar di folder images/ dengan nama yang sesuai
+        3. Ganti src gambar di book-cover dengan path gambar yang baru
+        
+        Contoh:
+        - Untuk buku "To Kill a Mockingbird", ganti:
+          <img src="images/1.jpg" alt="To Kill a Mockingbird">
+          Menjadi:
+          <img src="images/to-kill-mockingbird-cover.jpg" alt="To Kill a Mockingbird">
+        
+        - Untuk buku "1984", ganti:
+          <img src="images/2.jpeg" alt="1984">
+          Menjadi:
+          <img src="images/1984-cover.jpg" alt="1984">
+        
+        Tips:
+        - Gunakan nama file yang deskriptif
+        - Pastikan gambar memiliki resolusi yang baik
+        - Format JPG, PNG, atau WEBP direkomendasikan
+        - Ukuran ideal: 300x400px atau proporsi 3:4
+        */
+
+        .book-card:hover .book-cover {
+            transform: scale(1.05);
+        }
+
+        .book-info {
+            padding: 1.5rem;
+        }
+
+        .book-title {
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .book-author {
+            color: #7f8c8d;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .book-publisher {
+            color: #95a5a6;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .book-year {
+            color: #95a5a6;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .collection-count {
+            background: linear-gradient(45deg, #3498db, #9b59b6);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .stats-section {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #3498db;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .table-responsive {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .table thead th {
+            background: linear-gradient(45deg, #3498db, #9b59b6);
+            color: white;
+            border: none;
+            font-weight: 600;
+        }
+
+        .table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+            transform: scale(1.01);
+        }
+
+        .book-image-cell {
+            width: 80px;
+            padding: 0.5rem;
+        }
+
+        .book-image-cell img {
+            width: 60px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+    CARA MENGGANTI GAMBAR BUKU:
+    
+    1. Download gambar cover buku dari internet
+    2. Simpan gambar di folder images/ dengan nama yang sesuai
+    3. Ganti src gambar di book-cover dengan path gambar yang baru
+    
+    Contoh:
+    - Untuk buku "NEGARA DEMOKRASI INDONESIA", ganti:
+      <img src="images/Narnia_2_The_Lion_The_Witch_and_The_Wardrobe_cov_page-0001.jpg" alt="NEGARA DEMOKRASI INDONESIA">
+      Menjadi:
+      <img src="images/negara-demokrasi-indonesia-cover.jpg" alt="NEGARA DEMOKRASI INDONESIA">
+    
+    - Untuk buku "To Kill a Mockingbird", ganti:
+      <img src="images/1.jpg" alt="To Kill a Mockingbird">
+      Menjadi:
+      <img src="images/to-kill-mockingbird-cover.jpg" alt="To Kill a Mockingbird">
+    
+    Tips:
+    - Gunakan nama file yang deskriptif
+    - Pastikan gambar memiliki resolusi yang baik
+    - Format JPG, PNG, atau WEBP direkomendasikan
+    - Ukuran ideal: 300x400px atau proporsi 3:4
+    -->
+    <header class="bg-light">
+        <div class="container">
+            <div class="row align-items-center d-flex">
+                <div class="col-md-2 d-flex align-items-center">
+                    <img src="images/logo.jpg" alt="Logo Perpustakaan" class="img-fluid" style="max-width: 50px; height: auto;">
+                    <span class="ml-2" style="color: black; font-family: 'Roboto', sans-serif;">Perpustakaan UNIKA</span>
+                </div>
+                <div class="col-md-10">
+                    <nav class="navbar navbar-expand-md navbar-light">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="profile.html">Profil</a></li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#layanan" id="layananDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Layanan Kami</a>
+                                    <div class="dropdown-menu" aria-labelledby="layananDropdown">
+                                        <a class="dropdown-item" href="daftaranggota.html">Daftar Anggota</a>
+                                        <a class="dropdown-item" href="tabelbuku.html">Tabel Buku</a>
+                                        <a class="dropdown-item" href="pengembalian.html">Pengembalian</a>
+                                        <a class="dropdown-item" href="peminjaman.html">Peminjaman</a>
+                                        <a class="dropdown-item" href="pemesananbuku.html">Pemesanan Buku</a>
+                                    </div>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#Log In" id="loginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Log In</a>
+                                    <div class="dropdown-menu" aria-labelledby="loginDropdown">
+                                        <a class="dropdown-item" href="login.html">Login</a>
+                                        <a class="dropdown-item" href="register.html">Register</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mt-4">
+       
+        <div class="catalog-container">
+            <h1 class="catalog-title">📚 Katalog Buku Perpustakaan</h1>
+            
+            <!-- Statistics Section -->
+            <div class="stats-section">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="stat-item">
+                            <div class="stat-number">1,247</div>
+                            <div class="stat-label">Total Buku</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-item">
+                            <div class="stat-number">156</div>
+                            <div class="stat-label">Kategori</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-item">
+                            <div class="stat-number">89</div>
+                            <div class="stat-label">Penerbit</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-item">
+                            <div class="stat-number">2,341</div>
+                            <div class="stat-label">Eksemplar</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Section -->
+            <div class="search-section">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" placeholder="🔍 Cari judul buku, pengarang, atau penerbit..." id="searchInput">
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" id="categoryFilter">
+                            <option value="">Semua Kategori</option>
+                            <option value="Fiksi">Fiksi</option>
+                            <option value="Non-Fiksi">Non-Fiksi</option>
+                            <option value="Teknologi">Teknologi</option>
+                            <option value="Pendidikan">Pendidikan</option>
+                            <option value="Sejarah">Sejarah</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" id="yearFilter">
+                            <option value="">Semua Tahun</option>
+                            <option value="2020-2024">2020-2024</option>
+                            <option value="2010-2019">2010-2019</option>
+                            <option value="2000-2009">2000-2009</option>
+                            <option value="1990-1999">1990-1999</option>
+                            <option value="Sebelum 1990">Sebelum 1990</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="bookGrid">
+                <!-- Book Card 1 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/demokrasi.jpg" alt="NEGARA DEMOKRASI INDONESIA">
+                            <div class="book-cover-text">
+                                NEGARA DEMOKRASI<br>INDONESIA
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">NEGARA DEMOKRASI INDONESIA</h5>
+                            <p class="book-author">DADANG JULIANTARA</p>
+                            <p class="book-publisher">PONDOK EDUKASI</p>
+                            <p class="book-year">2002</p>
+                            <span class="collection-count">📚 15 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book Card 2 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/to kill.jpg" alt="To Kill a Mockingbird">
+                            <div class="book-cover-text">
+                                To Kill a<br>Mockingbird
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">To Kill a Mockingbird</h5>
+                            <p class="book-author">Harper Lee</p>
+                            <p class="book-publisher">J.B. Lippincott & Co.</p>
+                            <p class="book-year">1960</p>
+                            <span class="collection-count">📚 8 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book Card 3 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/1984.jpg" alt="1984">
+                            <div class="book-cover-text">
+                                1984
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">1984</h5>
+                            <p class="book-author">George Orwell</p>
+                            <p class="book-publisher">Secker & Warburg</p>
+                            <p class="book-year">1949</p>
+                            <span class="collection-count">📚 12 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book Card 4 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/the great gatsby.jpg" alt="The Great Gatsby">
+                            <div class="book-cover-text">
+                                The Great<br>Gatsby
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">The Great Gatsby</h5>
+                            <p class="book-author">F. Scott Fitzgerald</p>
+                            <p class="book-publisher">Charles Scribner's Sons</p>
+                            <p class="book-year">1925</p>
+                            <span class="collection-count">📚 6 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book Card 5 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/pride and prejudice.jpg" alt="Pride and Prejudice">
+                            <div class="book-cover-text">
+                                Pride and<br>Prejudice
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">Pride and Prejudice</h5>
+                            <p class="book-author">Jane Austen</p>
+                            <p class="book-publisher">T. Egerton, Whitehall</p>
+                            <p class="book-year">1813</p>
+                            <span class="collection-count">📚 9 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book Card 6 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/the catcher in the rye.jpg" alt="The Catcher in the Rye">
+                            <div class="book-cover-text">
+                                The Catcher<br>in the Rye
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">The Catcher in the Rye</h5>
+                            <p class="book-author">J.D. Salinger</p>
+                            <p class="book-publisher">Little, Brown and Company</p>
+                            <p class="book-year">1951</p>
+                            <span class="collection-count">📚 7 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book Card 7 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/the hobbit.jpg" alt="The Hobbit">
+                            <div class="book-cover-text">
+                                The Hobbit
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">The Hobbit</h5>
+                            <p class="book-author">J.R.R. Tolkien</p>
+                            <p class="book-publisher">George Allen & Unwin</p>
+                            <p class="book-year">1937</p>
+                            <span class="collection-count">📚 11 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book Card 8 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/fahrenheit 451.jpg" alt="Fahrenheit 451">
+                            <div class="book-cover-text">
+                                Fahrenheit<br>451
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">Fahrenheit 451</h5>
+                            <p class="book-author">Ray Bradbury</p>
+                            <p class="book-publisher">Ballantine Books</p>
+                            <p class="book-year">1953</p>
+                            <span class="collection-count">📚 5 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Books -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/brave new world.jpg" alt="Brave New World">
+                            <div class="book-cover-text">
+                                Brave New<br>World
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">Brave New World</h5>
+                            <p class="book-author">Aldous Huxley</p>
+                            <p class="book-publisher">Chatto & Windus</p>
+                            <p class="book-year">1932</p>
+                            <span class="collection-count">📚 8 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/Moby-Dick.jpg" alt="Moby-Dick">
+                            <div class="book-cover-text">
+                                Moby-Dick
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">Moby-Dick</h5>
+                            <p class="book-author">Herman Melville</p>
+                            <p class="book-publisher">Harper & Brothers</p>
+                            <p class="book-year">1851</p>
+                            <span class="collection-count">📚 4 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/war and peace.jpg" alt="War and Peace">
+                            <div class="book-cover-text">
+                                War and<br>Peace
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">War and Peace</h5>
+                            <p class="book-author">Leo Tolstoy</p>
+                            <p class="book-publisher">The Russian Messenger</p>
+                            <p class="book-year">1869</p>
+                            <span class="collection-count">📚 6 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/the odyssey.jpg" alt="The Odyssey"  >
+                            <div class="book-cover-text">
+                                The Odyssey
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">The Odyssey</h5>
+                            <p class="book-author">Homer</p>
+                            <p class="book-publisher">Ancient Greece</p>
+                            <p class="book-year">8th Century BC</p>
+                            <span class="collection-count">📚 3 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- More Books -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/harry potter and the philosopher's stone.jpg" alt="Harry Potter and the Philosopher's Stone">
+                            <div class="book-cover-text">
+                                Harry Potter<br>and the Philosopher's Stone
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">Harry Potter and the Philosopher's Stone</h5>
+                            <p class="book-author">J.K. Rowling</p>
+                            <p class="book-publisher">Bloomsbury</p>
+                            <p class="book-year">1997</p>
+                            <span class="collection-count">📚 18 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/the lord of the rings.jpg" alt="The Lord of the Rings">
+                            <div class="book-cover-text">
+                                The Lord of<br>the Rings
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">The Lord of the Rings</h5>
+                            <p class="book-author">J.R.R. Tolkien</p>
+                            <p class="book-publisher">George Allen & Unwin</p>
+                            <p class="book-year">1954</p>
+                            <span class="collection-count">📚 14 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/dune.jpg" alt="Dune">
+                            <div class="book-cover-text">
+                                Dune
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">Dune</h5>
+                            <p class="book-author">Frank Herbert</p>
+                            <p class="book-publisher">Chilton Books</p>
+                            <p class="book-year">1965</p>
+                            <span class="collection-count">📚 7 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/the chronicles of narnia.jpg" alt="The Chronicles of Narnia">
+                            <div class="book-cover-text">
+                                The Chronicles<br>of Narnia
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">The Chronicles of Narnia</h5>
+                            <p class="book-author">C.S. Lewis</p>
+                            <p class="book-publisher">Geoffrey Bles</p>
+                            <p class="book-year">1950</p>
+                            <span class="collection-count">📚 12 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/the hunger games.jpg" alt="The Hunger Games">
+                            <div class="book-cover-text">
+                                The Hunger<br>Games
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">The Hunger Games</h5>
+                            <p class="book-author">Suzanne Collins</p>
+                            <p class="book-publisher">Scholastic</p>
+                            <p class="book-year">2008</p>
+                            <span class="collection-count">📚 16 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/the da vinci code.jpg" alt="The Da Vinci Code">
+                            <div class="book-cover-text">
+                                The Da Vinci<br>Code
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">The Da Vinci Code</h5>
+                            <p class="book-author">Dan Brown</p>
+                            <p class="book-publisher">Doubleday</p>
+                            <p class="book-year">2003</p>
+                            <span class="collection-count">📚 9 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/the alchemist.jpg" alt="The Alchemist">
+                            <div class="book-cover-text">
+                                The Alchemist
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">The Alchemist</h5>
+                            <p class="book-author">Paulo Coelho</p>
+                            <p class="book-publisher">HarperCollins</p>
+                            <p class="book-year">1988</p>
+                            <span class="collection-count">📚 13 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/laskar pelangi.jpg" alt="Laskar Pelangi">
+                            <div class="book-cover-text">
+                                Laskar<br>Pelangi
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">Laskar Pelangi</h5>
+                            <p class="book-author">Andrea Hirata</p>
+                            <p class="book-publisher">Bentang Pustaka</p>
+                            <p class="book-year">2005</p>
+                            <span class="collection-count">📚 22 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/bumi manusia.jpg" alt="Bumi Manusia">
+                            <div class="book-cover-text">
+                                Bumi<br>Manusia
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">Bumi Manusia</h5>
+                            <p class="book-author">Pramoedya Ananta Toer</p>
+                            <p class="book-publisher">Hasta Mitra</p>
+                            <p class="book-year">1980</p>
+                            <span class="collection-count">📚 18 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/Ayat-Ayat Cinta.jpg" alt="Ayat-Ayat Cinta">
+                            <div class="book-cover-text">
+                                Ayat-Ayat<br>Cinta
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">Ayat-Ayat Cinta</h5>
+                            <p class="book-author">Habiburrahman El Shirazy</p>
+                            <p class="book-publisher">Republika</p>
+                            <p class="book-year">2004</p>
+                            <span class="collection-count">📚 25 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="images/negeri 5 menara.jpg" alt="Negeri 5 Menara">
+                            <div class="book-cover-text">
+                                Negeri 5<br>Menara
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h5 class="book-title">Negeri 5 Menara</h5>
+                            <p class="book-author">Ahmad Fuadi</p>
+                            <p class="book-publisher">Gramedia Pustaka Utama</p>
+                            <p class="book-year">2009</p>
+                            <span class="collection-count">📚 20 eksemplar</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Table View -->
+            <div class="mt-5">
+                <h3 class="text-center mb-4">📋 Tabel Detail Koleksi Buku</h3>
+               
+                <div class="table-responsive">
+                    <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>No</th>
+                                <th>Sampul</th>
+                    <th>Judul Buku</th>
+                    <th>Pengarang</th>
+                    <th>Penerbit</th>
+                                <th>Tahun</th>
+                                <th>Jumlah Koleksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                                <td class="book-image-cell">
+                                    <img src="images/NEGARA DEMOKRASI INDONESIA.jpg" alt="NEGARA DEMOKRASI INDONESIA">
+                                </td>
+                    <td>NEGARA DEMOKRASI INDONESIA</td>
+                    <td>DADANG JULIANTARA</td>
+                    <td>PONDOK EDUKASI</td>
+                    <td>2002</td>
+                                <td><span class="badge badge-primary">15 eksemplar</span></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                                <td class="book-image-cell">
+                                    <img src="images/To Kill a Mockingbird.jpg" alt="To Kill a Mockingbird">
+                                </td>
+                    <td>To Kill a Mockingbird</td>
+                    <td>Harper Lee</td>
+                    <td>J.B. Lippincott & Co.</td>
+                    <td>1960</td>
+                                <td><span class="badge badge-primary">8 eksemplar</span></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                                <td class="book-image-cell">
+                                    <img src="images/1984.jpg" alt="1984">
+                                </td>
+                    <td>1984</td>
+                    <td>George Orwell</td>
+                    <td>Secker & Warburg</td>
+                    <td>1949</td>
+                                <td><span class="badge badge-primary">12 eksemplar</span></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                                <td class="book-image-cell">
+                                    <img src="images/The Great Gatsby.jpg" alt="The Great Gatsby">
+                                </td>
+                    <td>The Great Gatsby</td>
+                    <td>F. Scott Fitzgerald</td>
+                    <td>Charles Scribner's Sons</td>
+                    <td>1925</td>
+                                <td><span class="badge badge-primary">6 eksemplar</span></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                                <td class="book-image-cell">
+                                    <img src="images/Pride and Prejudice.jpg" alt="Pride and Prejudice">
+                                </td>
+                    <td>Pride and Prejudice</td>
+                    <td>Jane Austen</td>
+                    <td>T. Egerton, Whitehall</td>
+                    <td>1813</td>
+                                <td><span class="badge badge-primary">9 eksemplar</span></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                                <td class="book-image-cell">
+                                    <img src="images/The Catcher in the Rye.jpg" alt="The Catcher in the Rye">
+                                </td>
+                    <td>The Catcher in the Rye</td>
+                    <td>J.D. Salinger</td>
+                    <td>Little, Brown and Company</td>
+                    <td>1951</td>
+                                <td><span class="badge badge-primary">7 eksemplar</span></td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                                <td class="book-image-cell">
+                                    <img src="images/The Hobbit.jpg" alt="The Hobbit">
+                                </td>
+                    <td>The Hobbit</td>
+                    <td>J.R.R. Tolkien</td>
+                    <td>George Allen & Unwin</td>
+                    <td>1937</td>
+                                <td><span class="badge badge-primary">11 eksemplar</span></td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                                <td class="book-image-cell">
+                                    <img src="images/Fahrenheit 451.jpg" alt="Fahrenheit 451">
+                                </td>
+                    <td>Fahrenheit 451</td>
+                    <td>Ray Bradbury</td>
+                    <td>Ballantine Books</td>
+                    <td>1953</td>
+                                <td><span class="badge badge-primary">5 eksemplar</span></td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                                <td class="book-image-cell">
+                                    <img src="images/Brave New World.jpg" alt="Brave New World">
+                                </td>
+                    <td>Brave New World</td>
+                    <td>Aldous Huxley</td>
+                    <td>Chatto & Windus</td>
+                    <td>1932</td>
+                                <td><span class="badge badge-primary">8 eksemplar</span></td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                                <td class="book-image-cell">
+                                    <img src="images/Moby-Dick.jpg" alt="Moby-Dick">
+                                </td>
+                    <td>Moby-Dick</td>
+                    <td>Herman Melville</td>
+                    <td>Harper & Brothers</td>
+                    <td>1851</td>
+                                <td><span class="badge badge-primary">4 eksemplar</span></td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                                <td class="book-image-cell">
+                                    <img src="images/War and Peace.jpg" alt="War and Peace">
+                                </td>
+                    <td>War and Peace</td>
+                    <td>Leo Tolstoy</td>
+                    <td>The Russian Messenger</td>
+                    <td>1869</td>
+                                <td><span class="badge badge-primary">6 eksemplar</span></td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                                <td class="book-image-cell">
+                                    <img src="images/The Odyssey.jpg" alt="The Odyssey">
+                                </td>
+                    <td>The Odyssey</td>
+                    <td>Homer</td>
+                    <td>Ancient Greece</td>
+                    <td>8th Century BC</td>
+                                <td><span class="badge badge-primary">3 eksemplar</span></td>
+                </tr>
+            </tbody>
+        </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section class="bg-light text-center py-3" style="margin-top: 40px;">   
+        
+        <footer class="bg-light text-center py-3" style="margin-top: 20px;">
+            <p>Copyright © 2025 — Made with Rimeyy💛 Perpustakaan</p>
+        </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script>
+        // 
+        // CARA MENGGANTI GAMBAR BUKU:
+        // 
+        // 1. Download gambar cover buku dari internet
+        // 2. Simpan gambar di folder images/ dengan nama yang sesuai
+        // 3. Ganti src gambar di book-cover dengan path gambar yang baru
+        // 
+        // Contoh:
+        // - Untuk buku "To Kill a Mockingbird", ganti:
+        //   <img src="images/1.jpg" alt="To Kill a Mockingbird">
+        //   Menjadi:
+        //   <img src="images/to-kill-mockingbird-cover.jpg" alt="To Kill a Mockingbird">
+        // 
+        // - Untuk buku "1984", ganti:
+        //   <img src="images/2.jpeg" alt="1984">
+        //   Menjadi:
+        //   <img src="images/1984-cover.jpg" alt="1984">
+        // 
+        // Tips:
+        // - Gunakan nama file yang deskriptif
+        // - Pastikan gambar memiliki resolusi yang baik
+        // - Format JPG, PNG, atau WEBP direkomendasikan
+        // - Ukuran ideal: 300x400px atau proporsi 3:4
+        // 
+        
+        // Search and Filter Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const categoryFilter = document.getElementById('categoryFilter');
+            const yearFilter = document.getElementById('yearFilter');
+            const bookCards = document.querySelectorAll('.book-card');
+            const tableRows = document.querySelectorAll('tbody tr');
+
+            function filterBooks() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const selectedCategory = categoryFilter.value;
+                const selectedYear = yearFilter.value;
+
+                bookCards.forEach(card => {
+                    const title = card.querySelector('.book-title').textContent.toLowerCase();
+                    const author = card.querySelector('.book-author').textContent.toLowerCase();
+                    const publisher = card.querySelector('.book-publisher').textContent.toLowerCase();
+                    const year = card.querySelector('.book-year').textContent;
+
+                    let showCard = true;
+
+                    // Search filter
+                    if (searchTerm && !title.includes(searchTerm) && !author.includes(searchTerm) && !publisher.includes(searchTerm)) {
+                        showCard = false;
+                    }
+
+                    // Year filter
+                    if (selectedYear) {
+                        const bookYear = parseInt(year);
+                        switch(selectedYear) {
+                            case '2020-2024':
+                                if (bookYear < 2020) showCard = false;
+                                break;
+                            case '2010-2019':
+                                if (bookYear < 2010 || bookYear >= 2020) showCard = false;
+                                break;
+                            case '2000-2009':
+                                if (bookYear < 2000 || bookYear >= 2010) showCard = false;
+                                break;
+                            case '1990-1999':
+                                if (bookYear < 1990 || bookYear >= 2000) showCard = false;
+                                break;
+                            case 'Sebelum 1990':
+                                if (bookYear >= 1990) showCard = false;
+                                break;
+                        }
+                    }
+
+                    // Show/hide card
+                    card.parentElement.style.display = showCard ? 'block' : 'none';
+                });
+
+                // Also filter table rows
+                tableRows.forEach(row => {
+                    const title = row.cells[2].textContent.toLowerCase();
+                    const author = row.cells[3].textContent.toLowerCase();
+                    const publisher = row.cells[4].textContent.toLowerCase();
+                    const year = row.cells[5].textContent;
+
+                    let showRow = true;
+
+                    // Search filter
+                    if (searchTerm && !title.includes(searchTerm) && !author.includes(searchTerm) && !publisher.includes(searchTerm)) {
+                        showRow = false;
+                    }
+
+                    // Year filter
+                    if (selectedYear) {
+                        const bookYear = parseInt(year);
+                        switch(selectedYear) {
+                            case '2020-2024':
+                                if (bookYear < 2020) showRow = false;
+                                break;
+                            case '2010-2019':
+                                if (bookYear < 2010 || bookYear >= 2020) showRow = false;
+                                break;
+                            case '2000-2009':
+                                if (bookYear < 2000 || bookYear >= 2010) showRow = false;
+                                break;
+                            case '1990-1999':
+                                if (bookYear < 1990 || bookYear >= 2000) showRow = false;
+                                break;
+                            case 'Sebelum 1990':
+                                if (bookYear >= 1990) showRow = false;
+                                break;
+                        }
+                    }
+
+                    // Show/hide row
+                    row.style.display = showRow ? '' : 'none';
+                });
+            }
+
+            // Add event listeners
+            searchInput.addEventListener('input', filterBooks);
+            categoryFilter.addEventListener('change', filterBooks);
+            yearFilter.addEventListener('change', filterBooks);
+
+            // Add smooth scroll animation to cards
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Apply animation to book cards
+            bookCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+    
+    <!-- 
+    CARA MENGGANTI GAMBAR BUKU:
+    
+    1. Cari gambar cover buku yang sesuai dari internet
+    2. Simpan gambar di folder images/ dengan nama yang sesuai
+    3. Ganti src gambar di book-cover dengan path gambar yang baru
+    
+    Contoh:
+    - Untuk buku "To Kill a Mockingbird", ganti:
+      <img src="images/1.jpg" alt="To Kill a Mockingbird">
+      Menjadi:
+      <img src="images/to-kill-mockingbird-cover.jpg" alt="To Kill a Mockingbird">
+    
+    - Untuk buku "1984", ganti:
+      <img src="images/2.jpeg" alt="1984">
+      Menjadi:
+      <img src="images/1984-cover.jpg" alt="1984">
+    
+    Tips:
+    - Gunakan nama file yang deskriptif
+    - Pastikan gambar memiliki resolusi yang baik
+    - Format JPG, PNG, atau WEBP direkomendasikan
+    - Ukuran ideal: 300x400px atau proporsi 3:4
+    -->
+</body>
+</html>

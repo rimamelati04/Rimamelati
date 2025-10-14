@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perpustakaan</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .profile-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            margin: 2rem 0;
+            padding: 2rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-image {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #fff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .profile-title {
+            color: #2c3e50;
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .profile-description {
+            color: #34495e;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: justify;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 5px solid #3498db;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery-section {
+            margin-top: 3rem;
+        }
+
+        .gallery-title {
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .gallery-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, #9b59b6);
+            border-radius: 2px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(52, 152, 219, 0.8), rgba(155, 89, 182, 0.8));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .skills-section {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .skill-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #3498db, #9b59b6);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            margin: 0.5rem;
+            border-radius: 25px;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .skill-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .contact-section {
+            margin-top: 3rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            margin: 0 1rem;
+            color: #3498db;
+            transition: all 0.3s ease;
+        }
+
+        .contact-icon:hover {
+            color: #9b59b6;
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-light">
+        <div class="container">
+            <div class="row align-items-center d-flex">
+                <div class="col-md-2 d-flex align-items-center">
+                    <img src="images/logo.jpg" alt="Logo Perpustakaan" class="img-fluid" style="max-width: 50px; height: auto;">
+                    <span class="ml-2" style="color: black; font-family: 'Roboto', sans-serif;">Perpustakaan UNIKA</span>
+                </div>
+                <div class="col-md-10">
+                    <nav class="navbar navbar-expand-md navbar-light">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="profile.html">Profil</a></li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#layanan" id="layananDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Layanan Kami</a>
+                                    <div class="dropdown-menu" aria-labelledby="layananDropdown">
+                                        <a class="dropdown-item" href="daftaranggota.html">Daftar Anggota</a>
+                                        <a class="dropdown-item" href="tabelbuku.html">Tabel Buku</a>
+                                        <a class="dropdown-item" href="pengembalian.html">Pengembalian</a>
+                                        <a class="dropdown-item" href="peminjaman.html">Peminjaman</a>
+                                        <a class="dropdown-item" href="pemesananbuku.html">Pemesanan Buku</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#Log In" id="loginDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Log In</a>
+                                    <div class="dropdown-menu" aria-labelledby="loginDropdown">
+                                        <a class="dropdown-item" href="login.html">Login</a>
+                                        <a class="dropdown-item" href="register.html">Register</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mt-4">
+        <div class="profile-container">
+            <div class="row align-items-center">
+                <div class="col-md-4 text-center">
+                    <img src="images/ft1.JPG" alt="Foto Pembuat" class="profile-image">
+                </div>
+                <div class="col-md-8">
+                    <h1 class="profile-title">Rima Melati</h1>
+                    <h3 class="profile-subtitle">Web Developer & Student</h3>
+                    <div class="profile-description">
+                        <p>Halo! Saya Rima Melati, seorang mahasiswi yang sedang belajar pengembangan web. Website perpustakaan ini adalah hasil dari pembelajaran saya dalam mata kuliah pemrograman web.</p>
+                        
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <!-- Galeri Foto -->
+        <div class="gallery-section">
+            <h3 class="gallery-title">Galeri Foto</h3>
+            <div class="row">
+                <!-- Foto 1 hingga 8 -->
+                <div class="col-md-3 mb-3">
+                    <div class="gallery-item">
+                        <img src="images/ft1.JPG" alt="Foto 1" class="img-fluid">
+                        <div class="gallery-overlay">Foto 1</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="gallery-item">
+                        <img src="images/ft2.JPG" alt="Foto 2" class="img-fluid">
+                        <div class="gallery-overlay">Foto 2</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="gallery-item">
+                        <img src="images/ft3.JPG" alt="Foto 3" class="img-fluid">
+                        <div class="gallery-overlay">Foto 3</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="gallery-item">
+                        <img src="images/ft4.JPG" alt="Foto 4" class="img-fluid">
+                        <div class="gallery-overlay">Foto 4</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="gallery-item">
+                        <img src="images/ft5.JPG" alt="Foto 5" class="img-fluid">
+                        <div class="gallery-overlay">Foto 5</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="gallery-item">
+                        <img src="images/ft6.JPG" alt="Foto 6" class="img-fluid">
+                        <div class="gallery-overlay">Foto 6</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="gallery-item">
+                        <img src="images/ft7.JPG" alt="Foto 7" class="img-fluid">
+                        <div class="gallery-overlay">Foto 7</div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="gallery-item">
+                        <img src="images/ft8.JPG" alt="Foto 8" class="img-fluid">
+                        <div class="gallery-overlay">Foto 8</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <section class="bg-light text-center py-3" style="margin-top: 40px;">   
+        
+        <footer class="bg-light text-center py-3" style="margin-top: 20px;">
+            <p>Copyright © 2025 — Made with Rimeyy💛 Perpustakaan</p>
+        </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
